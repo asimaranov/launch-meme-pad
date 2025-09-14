@@ -135,7 +135,7 @@ export default function ResponsiveNavigation() {
 
       {/* Mobile Bottom Navigation */}
       <div className="lg:hidden">
-        <div className="fixed bottom-0 left-0 right-0 bg-[#020202] border-t border-gray-800">
+        <div className="fixed bottom-0 left-0 right-0 bg-[#020202] border-t border-gray-800 z-100">
           <div className="flex justify-around py-4 px-4">
             {navItems.map((item) => (
               <MobileNavItem
