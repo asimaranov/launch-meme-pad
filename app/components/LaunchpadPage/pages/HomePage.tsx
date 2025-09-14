@@ -180,13 +180,11 @@ export default function HomePage() {
                 {state.connecting ? (
                   <>
                     <Loader2 size={18} className="animate-spin sm:w-5 sm:h-5" />
-                    <span className="hidden sm:inline">Connecting...</span>
-                    <span className="sm:hidden">Connecting</span>
+                    <span className="inline">Connecting...</span>
                   </>
                 ) : (
                   <>
-                    <span className="hidden sm:inline">Connect wallet</span>
-                    <span className="sm:hidden">Connect</span>
+                    <span className="inline">Connect wallet</span>
                   </>
                 )}
               </button>
