@@ -6,7 +6,7 @@ import {
   useNavigationStore,
 } from "../../store/useNavigationStore";
 import { useCentrifugo, useSolanaIntegration } from "../../hooks";
-import BottomNavigation from "./BottomNavigation";
+import ResponsiveNavigation from "./BottomNavigation";
 import HomePage from "./pages/HomePage";
 import TokensPage from "./pages/TokensPage";
 import EarnPage from "./pages/EarnPage";
@@ -97,14 +97,17 @@ export default function LaunchpadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white overflow-x-hidden flex flex-col">
-      {/* Current Page Content */}
-      {renderCurrentPage()}
-
-      {/* Bottom Navigation - Hide when Launch Token page or Token Info page is shown */}
+    <div className="min-h-screen bg-[#020202] text-white overflow-x-hidden flex">
+      {/* Responsive Navigation */}
       {!showLaunchPage &&
         !selectedTokenAddress &&
-        activeBottomTab !== "Launch Token" && <BottomNavigation />}
+        activeBottomTab !== "Launch Token" && <ResponsiveNavigation />}
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col lg:ml-64">
+        {/* Current Page Content */}
+        <div className="flex-1">{renderCurrentPage()}</div>
+      </div>
     </div>
   );
 }

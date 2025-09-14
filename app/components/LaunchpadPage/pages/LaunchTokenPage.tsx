@@ -406,23 +406,23 @@ export default function LaunchTokenPage({ onBack }: LaunchTokenPageProps) {
   );
 
   const renderStepIndicator = () => (
-    <div className="flex items-center justify-center mb-8">
-      <div className="flex items-center space-x-2">
+    <div className="flex items-center justify-center mb-6 lg:mb-8">
+      <div className="flex items-center space-x-2 lg:space-x-4">
         {[1, 2, 3].map((step) => (
           <div key={step} className="flex items-center">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg border-2 ${
+              className={`w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center font-bold text-base lg:text-lg border-2 transition-all duration-200 ${
                 step === currentStep
-                  ? "bg-[#C0FB5E] text-black border-[#98B24F]"
+                  ? "bg-[#C0FB5E] text-black border-[#98B24F] scale-110"
                   : step < currentStep
                     ? "bg-[#98B24F] text-white border-[#98B24F]"
                     : "bg-transparent text-gray-400 border-gray-600"
               }`}
             >
-              {step}
+              {step < currentStep ? "✓" : step}
             </div>
             {step < 3 && (
-              <div className="w-16 h-1 mx-2 bg-gray-700 rounded">
+              <div className="w-12 lg:w-16 h-1 mx-2 bg-gray-700 rounded">
                 <div
                   className={`h-full rounded transition-all duration-300 ${
                     step < currentStep
@@ -439,10 +439,12 @@ export default function LaunchTokenPage({ onBack }: LaunchTokenPageProps) {
   );
 
   const renderStep1 = () => (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-white mb-2">Set your token's</h1>
-        <p className="text-gray-400">basic information</p>
+    <div className="space-y-6 lg:space-y-8">
+      <div className="text-center mb-6 lg:mb-8">
+        <h1 className="text-xl lg:text-2xl font-bold text-white mb-2">
+          Set your token's
+        </h1>
+        <p className="text-gray-400 text-sm lg:text-base">basic information</p>
       </div>
 
       {/* Image Upload */}
@@ -736,23 +738,27 @@ export default function LaunchTokenPage({ onBack }: LaunchTokenPageProps) {
   );
 
   return (
-    <div className="h-screen bg-[#020202] text-white flex flex-col">
+    <div className="min-h-screen bg-[#020202] text-white flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-[#020202] flex-shrink-0">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-gray-400 hover:text-white"
-        >
-          <ArrowLeft size={20} />
-          Back
-        </button>
-        <h1 className="text-lg font-semibold">Launch Token</h1>
-        <div className="w-16" /> {/* Spacer */}
+      <div className="sticky top-0 bg-[#020202]/95 backdrop-blur-sm border-b border-gray-800 z-10">
+        <div className="w-full max-w-4xl mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between py-4 lg:py-6">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+            >
+              <ArrowLeft size={20} />
+              <span className="hidden sm:inline">Back</span>
+            </button>
+            <h1 className="text-lg lg:text-xl font-semibold">Launch Token</h1>
+            <div className="w-16 lg:w-20" /> {/* Spacer */}
+          </div>
+        </div>
       </div>
 
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-md mx-auto p-6">
+        <div className="w-full max-w-md mx-auto lg:max-w-2xl xl:max-w-3xl p-4 sm:p-6 lg:p-8">
           {successState.show ? (
             renderSuccessScreen()
           ) : (

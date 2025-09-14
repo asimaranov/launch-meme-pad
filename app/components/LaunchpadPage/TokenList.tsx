@@ -310,14 +310,19 @@ export default function TokenList() {
   }
 
   return (
-    <div className="mt-6">
+    <div className="mt-4 sm:mt-6">
       <div className="bg-black">
         {filteredTokens.length === 0 ? (
-          <div className="text-center py-12 px-4">
+          <div className="text-center py-8 sm:py-12 px-4">
             {searchQuery ? (
               <div>
-                <Search size={48} className="text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-400 text-lg mb-2">No tokens found</p>
+                <Search
+                  size={40}
+                  className="text-gray-600 mx-auto mb-3 sm:mb-4 sm:w-12 sm:h-12"
+                />
+                <p className="text-gray-400 text-base sm:text-lg mb-2">
+                  No tokens found
+                </p>
                 <p className="text-gray-500 text-sm">
                   Try searching for a different token name or symbol
                 </p>
@@ -326,8 +331,8 @@ export default function TokenList() {
               <div>
                 {activeTab === "MCap" && (
                   <>
-                    <div className="text-6xl mb-4">📊</div>
-                    <p className="text-gray-400 text-lg mb-2">
+                    <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📊</div>
+                    <p className="text-gray-400 text-base sm:text-lg mb-2">
                       No tokens by market cap
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -337,8 +342,8 @@ export default function TokenList() {
                 )}
                 {activeTab === "Hot" && (
                   <>
-                    <div className="text-6xl mb-4">🔥</div>
-                    <p className="text-gray-400 text-lg mb-2">
+                    <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">🔥</div>
+                    <p className="text-gray-400 text-base sm:text-lg mb-2">
                       No hot tokens right now
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -349,8 +354,8 @@ export default function TokenList() {
                 )}
                 {activeTab === "New" && (
                   <>
-                    <div className="text-6xl mb-4">✨</div>
-                    <p className="text-gray-400 text-lg mb-2">
+                    <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">✨</div>
+                    <p className="text-gray-400 text-base sm:text-lg mb-2">
                       No new launches
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -361,8 +366,8 @@ export default function TokenList() {
                 )}
                 {activeTab === "Listings" && (
                   <>
-                    <div className="text-6xl mb-4">📋</div>
-                    <p className="text-gray-400 text-lg mb-2">
+                    <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📋</div>
+                    <p className="text-gray-400 text-base sm:text-lg mb-2">
                       No verified listings
                     </p>
                     <p className="text-gray-500 text-sm">
@@ -413,22 +418,22 @@ export default function TokenList() {
 
             {/* Infinite Scroll Sentinel */}
             {hasMore && !loading.isLoading && (
-              <div ref={sentinelRef} className="py-8">
+              <div ref={sentinelRef} className="py-6 sm:py-8 px-4">
                 {isLoadingMore ? (
                   <div className="flex items-center justify-center">
                     <Loader2
-                      size={24}
-                      className="text-blue-500 animate-spin mr-2"
+                      size={20}
+                      className="text-blue-500 animate-spin mr-2 sm:w-6 sm:h-6"
                     />
-                    <span className="text-gray-400">
+                    <span className="text-gray-400 text-sm sm:text-base">
                       Loading more tokens...
                     </span>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center gap-4">
+                  <div className="flex flex-col items-center gap-3 sm:gap-4">
                     <button
                       onClick={loadMore}
-                      className="bg-[#1c1c1e] hover:bg-[#2c2c2e] text-gray-400 hover:text-white px-6 py-3 rounded-xl transition-colors"
+                      className="bg-[#1c1c1e] hover:bg-[#2c2c2e] text-gray-400 hover:text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-colors text-sm sm:text-base"
                     >
                       Load More Tokens ({ITEMS_PER_PAGE} more)
                     </button>
@@ -440,7 +445,7 @@ export default function TokenList() {
                         onClick={() =>
                           setDisplayedItemsCount(filteredTokens.length)
                         }
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-colors"
                       >
                         Load All ({filteredTokens.length - displayedItemsCount}{" "}
                         remaining)
@@ -453,7 +458,7 @@ export default function TokenList() {
 
             {/* End of List Indicator */}
             {!hasMore && displayedTokens.length > 0 && (
-              <div className="py-8 text-center">
+              <div className="py-6 sm:py-8 text-center px-4">
                 <p className="text-gray-500 text-sm">
                   You've reached the end of the list
                 </p>

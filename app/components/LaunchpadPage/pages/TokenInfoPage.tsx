@@ -478,40 +478,43 @@ export default function TokenInfoPage({
   };
 
   return (
-    <div className="flex-1 pb-24 bg-[#020202]">
+    <div className="flex-1 pb-24 lg:pb-8 bg-[#020202]">
       {/* Header */}
       <div className="sticky top-0 bg-[#020202]/95 backdrop-blur-sm border-b border-gray-800 z-10">
-        <div className="flex items-center justify-between p-4">
-          <button
-            onClick={onBack}
-            className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-          >
-            <ArrowLeft size={24} className="text-white" />
-          </button>
+        <div className="w-full max-w-6xl mx-auto px-4 lg:px-8">
+          <div className="flex items-center justify-between py-4 lg:py-6">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+            >
+              <ArrowLeft size={20} />
+              <span className="hidden sm:inline">Back</span>
+            </button>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setIsFavorite(!isFavorite)}
-              className={`p-2 rounded-lg transition-colors ${
-                isFavorite
-                  ? "text-red-400 bg-red-400/10"
-                  : "text-gray-400 hover:bg-gray-800"
-              }`}
-            >
-              <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
-            </button>
-            <button
-              onClick={handleShare}
-              className="p-2 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors"
-            >
-              <Share2 size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsFavorite(!isFavorite)}
+                className={`p-2 rounded-lg transition-colors ${
+                  isFavorite
+                    ? "text-red-400 bg-red-400/10"
+                    : "text-gray-400 hover:bg-gray-800"
+                }`}
+              >
+                <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+              </button>
+              <button
+                onClick={handleShare}
+                className="p-2 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors"
+              >
+                <Share2 size={20} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Token Header */}
-      <div className="px-4 py-6">
+      <div className="w-full max-w-6xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         <div className="flex items-center gap-4 mb-6">
           {/* Token Image */}
           <div className="w-16 h-16 bg-gray-800 rounded-full border border-gray-600 flex items-center justify-center overflow-hidden">
@@ -689,7 +692,7 @@ export default function TokenInfoPage({
         )}
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6 lg:max-w-md lg:mx-auto xl:max-w-lg">
           <button className="bg-green-600 hover:bg-green-700 text-white py-4 px-6 rounded-xl font-semibold text-lg transition-colors flex items-center justify-center gap-2">
             <DollarSign size={20} />
             Buy {token.symbol}
@@ -707,7 +710,7 @@ export default function TokenInfoPage({
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors capitalize ${
+                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-colors capitalize cursor-pointer ${
                   activeTab === tab
                     ? "bg-blue-600 text-white"
                     : "text-gray-400 hover:text-white"
@@ -720,302 +723,389 @@ export default function TokenInfoPage({
         </div>
 
         {/* Tab Content */}
-        <div>
-          {activeTab === "overview" && (
-            <div className="space-y-4">
-              <div className="bg-[#1c1c1e] rounded-xl p-4">
-                <h4 className="text-white font-semibold mb-3">Token Details</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Total Supply</span>
-                    <span className="text-white font-mono">
-                      {token.supply.toLocaleString()}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Decimals</span>
-                    <span className="text-white">{token.decimals}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Hardcap</span>
-                    <span className="text-white">
-                      {formatSolBalance(token.hardcap)} SOL
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-400">Version</span>
-                    <span className="text-white">v{token.version}</span>
-                  </div>
-                </div>
-              </div>
-
-              {token.createdAt && (
+        <div className="lg:grid lg:grid-cols-3 lg:gap-8">
+          {/* Main Content - Takes 2 columns on desktop */}
+          <div className="lg:col-span-2">
+            {activeTab === "overview" && (
+              <div className="space-y-4">
                 <div className="bg-[#1c1c1e] rounded-xl p-4">
-                  <h4 className="text-white font-semibold mb-3">Launch Info</h4>
-                  <div className="flex items-center gap-2 text-gray-300">
-                    <Clock size={16} />
-                    <span>
-                      Created{" "}
-                      {new Date(
-                        typeof token.createdAt === "number"
-                          ? token.createdAt
-                          : parseInt(token.createdAt)
-                      ).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "trades" && (
-            <div className="space-y-3">
-              {trades.length > 0 ? (
-                trades.slice(0, 10).map((trade, index) => (
-                  <div key={index} className="bg-[#1c1c1e] rounded-xl p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-3 h-3 rounded-full ${
-                            (trade.side || 0) === 1
-                              ? "bg-green-400"
-                              : "bg-red-400"
-                          }`}
-                        />
-                        <div>
-                          <p className="text-white font-medium">
-                            {(trade.side || 0) === 1 ? "Buy" : "Sell"}
-                          </p>
-                          <p className="text-gray-400 text-sm font-mono">
-                            {formatAddress(trade.maker || "")}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-white font-semibold">
-                          {(trade.tokens || 0).toLocaleString()} {token.symbol}
-                        </p>
-                        <p className="text-gray-400 text-sm">
-                          {formatSolBalance(trade.sol || 0)} SOL
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="bg-[#1c1c1e] rounded-xl p-8 text-center">
-                  <BarChart3 size={48} className="text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-400">No recent trades</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "holders" && (
-            <div className="bg-[#1c1c1e] rounded-xl p-8 text-center">
-              <Users size={48} className="text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 mb-2">Holder data coming soon</p>
-              <p className="text-gray-500 text-sm">
-                Estimated {mockStats.holders.toLocaleString()} holders
-              </p>
-            </div>
-          )}
-
-          {activeTab === "chat" && (
-            <div className="space-y-4">
-              {/* Chat Messages */}
-              <div className="bg-[#1c1c1e] rounded-xl p-4 h-96 flex flex-col">
-                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-gray-700">
-                  <MessageCircle size={20} className="text-blue-400" />
-                  <h3 className="text-white font-semibold">Token Chat</h3>
-                  <div className="flex items-center gap-2 ml-auto">
-                    {/* WebSocket connection indicator */}
-                    <div
-                      className={`w-2 h-2 rounded-full ${isConnected ? "bg-green-400" : "bg-gray-400"}`}
-                      title={
-                        isConnected
-                          ? "Connected - real-time updates"
-                          : "Disconnected"
-                      }
-                    />
-                    {messages[tokenAddress] && (
-                      <span className="text-gray-400 text-sm">
-                        {messages[tokenAddress].length} messages
+                  <h4 className="text-white font-semibold mb-3">
+                    Token Details
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Total Supply</span>
+                      <span className="text-white font-mono">
+                        {token.supply.toLocaleString()}
                       </span>
-                    )}
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Decimals</span>
+                      <span className="text-white">{token.decimals}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Hardcap</span>
+                      <span className="text-white">
+                        {formatSolBalance(token.hardcap)} SOL
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Version</span>
+                      <span className="text-white">v{token.version}</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Messages Container */}
-                <div className="flex-1 overflow-y-auto mb-4 space-y-3">
-                  {!userWalletAddress ? (
-                    <div className="text-center py-8">
-                      <MessageCircle
-                        size={48}
-                        className="text-gray-600 mx-auto mb-4"
-                      />
-                      <p className="text-gray-400 mb-2">Wallet required</p>
-                      <p className="text-gray-500 text-sm">
-                        Connect your wallet to view and participate in chat
-                      </p>
+                {token.createdAt && (
+                  <div className="bg-[#1c1c1e] rounded-xl p-4">
+                    <h4 className="text-white font-semibold mb-3">
+                      Launch Info
+                    </h4>
+                    <div className="flex items-center gap-2 text-gray-300">
+                      <Clock size={16} />
+                      <span>
+                        Created{" "}
+                        {new Date(
+                          typeof token.createdAt === "number"
+                            ? token.createdAt
+                            : parseInt(token.createdAt)
+                        ).toLocaleDateString()}
+                      </span>
                     </div>
-                  ) : messagesLoading.isLoading ? (
-                    <div className="flex items-center justify-center h-32">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                    </div>
-                  ) : messagesLoading.error ? (
-                    <div className="text-center py-8">
-                      <MessageCircle
-                        size={48}
-                        className="text-gray-600 mx-auto mb-4"
-                      />
-                      <p className="text-red-400 mb-2">
-                        Failed to load messages
-                      </p>
-                      <p className="text-gray-500 text-sm mb-4">
-                        {messagesLoading.error.message}
-                      </p>
-                      <button
-                        onClick={() =>
-                          userWalletAddress &&
-                          fetchMessages(tokenAddress, userWalletAddress)
-                        }
-                        disabled={!userWalletAddress}
-                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
-                      >
-                        Retry
-                      </button>
-                    </div>
-                  ) : messages[tokenAddress] &&
-                    messages[tokenAddress].length > 0 ? (
-                    messages[tokenAddress].map((message, index) => (
-                      <div key={index} className="flex gap-3">
-                        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
-                          <span className="text-white text-xs font-semibold">
-                            {message.wallet.slice(0, 2).toUpperCase()}
-                          </span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {activeTab === "trades" && (
+              <div className="space-y-3">
+                {trades.length > 0 ? (
+                  trades.slice(0, 10).map((trade, index) => (
+                    <div key={index} className="bg-[#1c1c1e] rounded-xl p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`w-3 h-3 rounded-full ${
+                              (trade.side || 0) === 1
+                                ? "bg-green-400"
+                                : "bg-red-400"
+                            }`}
+                          />
+                          <div>
+                            <p className="text-white font-medium">
+                              {(trade.side || 0) === 1 ? "Buy" : "Sell"}
+                            </p>
+                            <p className="text-gray-400 text-sm font-mono">
+                              {formatAddress(trade.maker || "")}
+                            </p>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-gray-400 text-sm font-mono">
-                              {formatAddress(message.wallet)}
-                            </span>
-                            <span className="text-gray-500 text-xs">
-                              {new Date(message.time).toLocaleTimeString()}
+                        <div className="text-right">
+                          <p className="text-white font-semibold">
+                            {(trade.tokens || 0).toLocaleString()}{" "}
+                            {token.symbol}
+                          </p>
+                          <p className="text-gray-400 text-sm">
+                            {formatSolBalance(trade.sol || 0)} SOL
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="bg-[#1c1c1e] rounded-xl p-8 text-center">
+                    <BarChart3
+                      size={48}
+                      className="text-gray-600 mx-auto mb-4"
+                    />
+                    <p className="text-gray-400">No recent trades</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {activeTab === "holders" && (
+              <div className="bg-[#1c1c1e] rounded-xl p-8 text-center">
+                <Users size={48} className="text-gray-600 mx-auto mb-4" />
+                <p className="text-gray-400 mb-2">Holder data coming soon</p>
+                <p className="text-gray-500 text-sm">
+                  Estimated {mockStats.holders.toLocaleString()} holders
+                </p>
+              </div>
+            )}
+
+            {activeTab === "chat" && (
+              <div className="space-y-4">
+                {/* Chat Messages */}
+                <div className="bg-[#1c1c1e] rounded-xl p-4 h-96 flex flex-col">
+                  <div className="flex items-center gap-2 mb-4 pb-4 border-b border-gray-700">
+                    <MessageCircle size={20} className="text-blue-400" />
+                    <h3 className="text-white font-semibold">Token Chat</h3>
+                    <div className="flex items-center gap-2 ml-auto">
+                      {/* WebSocket connection indicator */}
+                      <div
+                        className={`w-2 h-2 rounded-full ${isConnected ? "bg-green-400" : "bg-gray-400"}`}
+                        title={
+                          isConnected
+                            ? "Connected - real-time updates"
+                            : "Disconnected"
+                        }
+                      />
+                      {messages[tokenAddress] && (
+                        <span className="text-gray-400 text-sm">
+                          {messages[tokenAddress].length} messages
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Messages Container */}
+                  <div className="flex-1 overflow-y-auto mb-4 space-y-3">
+                    {!userWalletAddress ? (
+                      <div className="text-center py-8">
+                        <MessageCircle
+                          size={48}
+                          className="text-gray-600 mx-auto mb-4"
+                        />
+                        <p className="text-gray-400 mb-2">Wallet required</p>
+                        <p className="text-gray-500 text-sm">
+                          Connect your wallet to view and participate in chat
+                        </p>
+                      </div>
+                    ) : messagesLoading.isLoading ? (
+                      <div className="flex items-center justify-center h-32">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                      </div>
+                    ) : messagesLoading.error ? (
+                      <div className="text-center py-8">
+                        <MessageCircle
+                          size={48}
+                          className="text-gray-600 mx-auto mb-4"
+                        />
+                        <p className="text-red-400 mb-2">
+                          Failed to load messages
+                        </p>
+                        <p className="text-gray-500 text-sm mb-4">
+                          {messagesLoading.error.message}
+                        </p>
+                        <button
+                          onClick={() =>
+                            userWalletAddress &&
+                            fetchMessages(tokenAddress, userWalletAddress)
+                          }
+                          disabled={!userWalletAddress}
+                          className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        >
+                          Retry
+                        </button>
+                      </div>
+                    ) : messages[tokenAddress] &&
+                      messages[tokenAddress].length > 0 ? (
+                      messages[tokenAddress].map((message, index) => (
+                        <div key={index} className="flex gap-3">
+                          <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span className="text-white text-xs font-semibold">
+                              {message.wallet.slice(0, 2).toUpperCase()}
                             </span>
                           </div>
-                          <p className="text-gray-200">{message.message}</p>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-gray-400 text-sm font-mono">
+                                {formatAddress(message.wallet)}
+                              </span>
+                              <span className="text-gray-500 text-xs">
+                                {new Date(message.time).toLocaleTimeString()}
+                              </span>
+                            </div>
+                            <p className="text-gray-200">{message.message}</p>
+                          </div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-8">
+                        <MessageCircle
+                          size={48}
+                          className="text-gray-600 mx-auto mb-4"
+                        />
+                        <p className="text-gray-400 mb-2">No messages yet</p>
+                        <p className="text-gray-500 text-sm">
+                          Be the first to start the conversation!
+                        </p>
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-8">
-                      <MessageCircle
-                        size={48}
-                        className="text-gray-600 mx-auto mb-4"
-                      />
-                      <p className="text-gray-400 mb-2">No messages yet</p>
-                      <p className="text-gray-500 text-sm">
-                        Be the first to start the conversation!
-                      </p>
-                    </div>
-                  )}
-                  {/* Auto-scroll anchor */}
-                  <div ref={messagesEndRef} />
-                </div>
-
-                {/* Chat Input */}
-                {isUserAuthenticated ? (
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={chatMessage}
-                      onChange={(e) => setChatMessage(e.target.value)}
-                      onKeyPress={handleChatKeyPress}
-                      placeholder="Type a message..."
-                      className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
-                      disabled={
-                        sendMessageLoading.isLoading || isSigningMessage
-                      }
-                    />
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={
-                        !chatMessage.trim() ||
-                        sendMessageLoading.isLoading ||
-                        isSigningMessage ||
-                        !userWalletAddress ||
-                        !signMessage
-                      }
-                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
-                    >
-                      {isSigningMessage ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                          <span className="text-xs">Sign</span>
-                        </>
-                      ) : sendMessageLoading.isLoading ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      ) : (
-                        <Send size={16} />
-                      )}
-                    </button>
+                    )}
+                    {/* Auto-scroll anchor */}
+                    <div ref={messagesEndRef} />
                   </div>
-                ) : (
-                  <div className="text-center py-4 bg-gray-800 rounded-lg">
-                    <p className="text-gray-400 mb-2">
-                      {!signMessage
-                        ? "Wallet signing not supported"
-                        : !authenticated && !walletConnected
-                          ? "Connect your wallet to chat"
-                          : !userWalletAddress
+
+                  {/* Chat Input */}
+                  {isUserAuthenticated ? (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={chatMessage}
+                        onChange={(e) => setChatMessage(e.target.value)}
+                        onKeyPress={handleChatKeyPress}
+                        placeholder="Type a message..."
+                        className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+                        disabled={
+                          sendMessageLoading.isLoading || isSigningMessage
+                        }
+                      />
+                      <button
+                        onClick={handleSendMessage}
+                        disabled={
+                          !chatMessage.trim() ||
+                          sendMessageLoading.isLoading ||
+                          isSigningMessage ||
+                          !userWalletAddress ||
+                          !signMessage
+                        }
+                        className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                      >
+                        {isSigningMessage ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                            <span className="text-xs">Sign</span>
+                          </>
+                        ) : sendMessageLoading.isLoading ? (
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        ) : (
+                          <Send size={16} />
+                        )}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 bg-gray-800 rounded-lg">
+                      <p className="text-gray-400 mb-2">
+                        {!signMessage
+                          ? "Wallet signing not supported"
+                          : !authenticated && !walletConnected
                             ? "Connect your wallet to chat"
-                            : "Authentication required"}
-                    </p>
-                    <p className="text-gray-500 text-sm">
-                      {!signMessage
-                        ? "Your wallet does not support message signing, which is required for chat"
-                        : !walletConnected
-                          ? "You need to connect a wallet to participate in token discussions"
-                          : "Please ensure your wallet is properly connected"}
-                    </p>
-                    {!authenticated && !walletConnected ? (
-                      <div className="mt-3 flex gap-2 justify-center">
-                        <button
-                          onClick={login}
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-                        >
-                          Sign In
-                        </button>
+                            : !userWalletAddress
+                              ? "Connect your wallet to chat"
+                              : "Authentication required"}
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        {!signMessage
+                          ? "Your wallet does not support message signing, which is required for chat"
+                          : !walletConnected
+                            ? "You need to connect a wallet to participate in token discussions"
+                            : "Please ensure your wallet is properly connected"}
+                      </p>
+                      {!authenticated && !walletConnected ? (
+                        <div className="mt-3 flex gap-2 justify-center">
+                          <button
+                            onClick={login}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                          >
+                            Sign In
+                          </button>
+                          <button
+                            onClick={selectWallet}
+                            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+                          >
+                            Connect Wallet
+                          </button>
+                        </div>
+                      ) : !walletConnected ? (
                         <button
                           onClick={selectWallet}
-                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+                          className="mt-3 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
                         >
                           Connect Wallet
                         </button>
-                      </div>
-                    ) : !walletConnected ? (
-                      <button
-                        onClick={selectWallet}
-                        className="mt-3 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
-                      >
-                        Connect Wallet
-                      </button>
-                    ) : null}
-                  </div>
-                )}
+                      ) : null}
+                    </div>
+                  )}
 
-                {/* Send Error */}
-                {sendMessageLoading.error && (
-                  <div className="mt-2 p-2 bg-red-900/50 border border-red-800 rounded-lg">
-                    <p className="text-red-400 text-sm">
-                      Failed to send message: {sendMessageLoading.error.message}
-                    </p>
-                  </div>
-                )}
+                  {/* Send Error */}
+                  {sendMessageLoading.error && (
+                    <div className="mt-2 p-2 bg-red-900/50 border border-red-800 rounded-lg">
+                      <p className="text-red-400 text-sm">
+                        Failed to send message:{" "}
+                        {sendMessageLoading.error.message}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
+            )}
+          </div>
+
+          {/* Sidebar - Shows on desktop */}
+          <div className="hidden lg:block lg:col-span-1 mt-6 lg:mt-0">
+            <div className="sticky top-24 space-y-4">
+              {/* Quick Stats */}
+              <div className="bg-[#1c1c1e] rounded-xl p-4">
+                <h4 className="text-white font-semibold mb-3">Quick Stats</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Market Cap</span>
+                    <span className="text-white font-mono">{marketCap}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Price</span>
+                    <span className="text-white font-mono">{price}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">24h Change</span>
+                    <span
+                      className={`font-mono ${isPositive ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {percentage}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Volume (24h)</span>
+                    <span className="text-white font-mono">
+                      ${(token.volume24h || Math.random() * 100).toFixed(1)}K
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social Links - Desktop Sidebar */}
+              {(token.website || token.telegram || token.x) && (
+                <div className="bg-[#1c1c1e] rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-3">Links</h4>
+                  <div className="space-y-2">
+                    {token.website && (
+                      <a
+                        href={token.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
+                      >
+                        <Globe size={14} />
+                        Website
+                      </a>
+                    )}
+                    {token.telegram && (
+                      <a
+                        href={token.telegram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
+                      >
+                        <MessageCircle size={14} />
+                        Telegram
+                      </a>
+                    )}
+                    {token.x && (
+                      <a
+                        href={token.x}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm"
+                      >
+                        <Twitter size={14} />X (Twitter)
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
