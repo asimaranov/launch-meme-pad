@@ -11,6 +11,7 @@ import {
   Copy,
   Check,
   Loader2,
+  User,
 } from "lucide-react";
 import {
   useNavigationStore,
@@ -160,7 +161,7 @@ export default function HomePage() {
           {!state.connected ? (
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg relative flex-shrink-0">
-                A{/* WebSocket connection indicator */}
+                <User size={20} />
                 <div
                   className={`absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-gray-900 ${
                     isConnected ? "bg-green-500" : "bg-red-500"

@@ -27,7 +27,7 @@ export default function UserInfo() {
             className="w-full h-full rounded-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-gray-300 rounded-full"></div>
+          <div className="w-full h-full bg-gray-300 rounded-full animate-pulse"></div>
         )}
       </div>
 
