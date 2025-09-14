@@ -59,7 +59,9 @@ export default function TokenCard({
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="text-white font-semibold text-lg truncate">{name}</h3>
+        <h3 className="text-white font-semibold text-lg truncate">
+          {name.length > 15 ? `${name.slice(0, 15)}...` : name}
+        </h3>
       </div>
       <div
         className={`font-bold text-lg ${isPositive ? "text-green-400" : "text-red-400"}`}
