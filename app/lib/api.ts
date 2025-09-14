@@ -23,7 +23,7 @@ import {
 } from "../types/api";
 
 // API Configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://launch.meme/";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://launch.meme";
 
 // Custom error class for API errors
 export class ApiError extends Error {
