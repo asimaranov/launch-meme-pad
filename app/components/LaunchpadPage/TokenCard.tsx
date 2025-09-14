@@ -11,6 +11,7 @@ interface TokenCardProps {
 export default function TokenCard({
   name,
   symbol,
+  image,
   percentage,
   isPositive,
   tokenAddress,
@@ -29,10 +30,33 @@ export default function TokenCard({
           : "opacity-50 cursor-not-allowed"
       }`}
     >
-      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-        <span className="text-white font-bold text-sm">
-          {symbol.slice(0, 2)}
-        </span>
+      <div className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+        {image ? (
+          <img
+            src={image}
+            alt={`${name} token`}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              // Fallback to gradient background with symbol if image fails to load
+              const target = e.target as HTMLImageElement;
+              target.style.display = "none";
+              target.parentElement!.classList.add(
+                "bg-gradient-to-br",
+                "from-blue-500",
+                "to-purple-600"
+              );
+              target.parentElement!.innerHTML = `<span class="text-white font-bold text-sm">${symbol.slice(0, 2)}</span>`;
+            }}
+          />
+        ) : (
+          <>
+            <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-sm">
+                {symbol.slice(0, 2)}
+              </span>
+            </div>
+          </>
+        )}
       </div>
       <div className="flex-1 min-w-0">
         <h3 className="text-white font-semibold text-lg truncate">{name}</h3>

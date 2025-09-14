@@ -321,6 +321,7 @@ export default function HomePage() {
                     key={token.id}
                     name={token.name}
                     symbol={token.symbol}
+                    image={token.image}
                     percentage={token.percentage}
                     isPositive={token.isPositive}
                     tokenAddress={token.id}
