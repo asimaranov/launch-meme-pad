@@ -42,51 +42,6 @@ export function PrivyProvider({ children }: PrivyProviderProps) {
           requireUserPasswordOnCreate: false,
         },
         loginMethods: ["email", "wallet", "sms"],
-        supportedChains: [
-          {
-            id: 1, // Ethereum Mainnet
-            name: "Ethereum",
-            network: "ethereum",
-            nativeCurrency: {
-              name: "Ether",
-              symbol: "ETH",
-              decimals: 18,
-            },
-            rpcUrls: {
-              default: {
-                http: ["https://eth-mainnet.g.alchemy.com/v2/demo"],
-              },
-            },
-            blockExplorers: {
-              default: {
-                name: "Etherscan",
-                url: "https://etherscan.io",
-              },
-            },
-          },
-          {
-            id: 11155111, // Sepolia Testnet
-            name: "Sepolia",
-            network: "sepolia",
-            nativeCurrency: {
-              name: "Sepolia Ether",
-              symbol: "ETH",
-              decimals: 18,
-            },
-            rpcUrls: {
-              default: {
-                http: ["https://eth-sepolia.g.alchemy.com/v2/demo"],
-              },
-            },
-            blockExplorers: {
-              default: {
-                name: "Etherscan",
-                url: "https://sepolia.etherscan.io",
-              },
-            },
-          },
-        ],
-        // Note: Privy primarily supports Ethereum chains
         // Solana integration is handled through our SolanaContext
       }}
     >

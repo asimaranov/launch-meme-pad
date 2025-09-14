@@ -26,14 +26,7 @@ import { useChatStore } from "../../../store/useChatStore";
 import { useSolana } from "../../../context/SolanaContext";
 import { useCentrifugo } from "../../../hooks/useWebSocket";
 
-// Optional Privy import with fallback
-let usePrivyAuth: any = null;
-try {
-  const privyModule = require("../../../context/PrivyContext");
-  usePrivyAuth = privyModule.usePrivyAuth;
-} catch (error) {
-  console.warn("Privy context not available:", error);
-}
+import { usePrivyAuth } from "../../../context/PrivyContext";
 import { formatSolBalance, formatAddress } from "../../../sdk/utils";
 import {
   calculateTokenPercentageChange,
@@ -76,25 +69,8 @@ export default function TokenInfoPage({
     sendMessage,
   } = useChatStore();
 
-  // Get authentication status from Privy (with fallback)
-  let authenticated = false;
-  let user = null;
-  let ready = true;
-  let login = () => console.log("Privy login not available");
-  let connectWallet = () => console.log("Privy connectWallet not available");
-
-  if (usePrivyAuth) {
-    try {
-      const privyAuth = usePrivyAuth();
-      authenticated = privyAuth.authenticated;
-      user = privyAuth.user;
-      ready = privyAuth.ready;
-      login = privyAuth.login;
-      connectWallet = privyAuth.connectWallet;
-    } catch (error) {
-      console.warn("Privy not available, using Solana wallet only:", error);
-    }
-  }
+  // Get authentication status from Privy
+  const { authenticated, user, ready, login, connectWallet } = usePrivyAuth();
 
   // Get wallet connection from Solana context
   const { walletConnected, walletPublicKey, selectWallet, signMessage } =
