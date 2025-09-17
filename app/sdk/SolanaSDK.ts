@@ -179,3 +179,4 @@ export const defaultConfig: SolanaSDKConfig = {
   network: "devnet",
   commitment: "confirmed",
 };
+

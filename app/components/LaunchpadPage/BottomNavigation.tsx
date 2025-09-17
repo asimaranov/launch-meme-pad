@@ -125,7 +125,7 @@ export default function ResponsiveNavigation() {
             {/* Footer */}
             <div className="p-4 border-t border-gray-800/50">
               <div className="text-xs text-gray-500 text-center">
-                <p>© 2024 Meme Launchpad</p>
+                <p>© 2025 Meme Launchpad</p>
                 <p className="mt-1">Built on Solana</p>
               </div>
             </div>

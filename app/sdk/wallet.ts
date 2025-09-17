@@ -109,3 +109,4 @@ export class WalletManager {
     return this.currentWallet.signMessage(message);
   }
 }
+

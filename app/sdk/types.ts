@@ -81,3 +81,4 @@ export interface SolanaSDKState {
   network: string;
   walletName?: string;
 }
+
